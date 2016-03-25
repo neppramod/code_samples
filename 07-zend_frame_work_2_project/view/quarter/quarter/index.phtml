@@ -1,0 +1,92 @@
+<?php
+use Zend\Form\Element;
+
+$title = 'View Quarters';
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <h2>Quarters</h2>
+
+        <div class="dataTables-new-button">
+            <a class="btn btn-default"
+               href="<?php echo $this->url('quarter/default', array('controller' => 'quarter', 'action' => 'new')) ?>">
+                New Quarter
+            </a>
+        </div>
+        <table id="quarter-index-table" class="table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Session</th>
+                <th>Year</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Take Availability?</th>
+                <th>Availability Deadline</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->quarters as $quarter): ?>
+                <tr>
+                    <td><?php echo $quarter->getId(); ?></td>
+                    <td><?php echo $quarter->session; ?></td>
+                    <td><?php echo $quarter->year; ?></td>
+                    <td><?php echo date_format($quarter->startDate, 'm/d/Y'); ?></td>
+                    <td><?php echo date_format($quarter->endDate, 'm/d/Y'); ?></td>
+                    <td><?php echo $quarter->takeAvailability ? 'Yes' : 'No'; ?></td>
+                    <td><?php echo $quarter->takeAvailability ? date_format($quarter->availabilityDeadline, 'm/d/Y') : ''; ?></td>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-sm btn-default btn-row"
+                           href="<?php echo $this->url('quarter/default',
+                               array(
+                                   'controller' => 'quartertimeframe',
+                                   'action' => 'index'
+                               ),
+                               array(
+                                   'query' => array(
+                                       'quarter' => $quarter->getId(),
+                                   )
+                               )
+                           )
+                           ?>"
+                           title="View Quarter Time Frames">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-default btn-row"
+                           href="<?php echo $this->url('quarter/default',
+                               array(
+                                   'controller' => 'quarter',
+                                   'action' => 'edit',
+                                   'id' => $quarter->getId()
+                               )
+                           ); ?>"
+                           title="Edit Quarter">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <form
+                            action="<?php echo $this->url('quarter/default',
+                                array('controller' => 'quarter', 'action' => 'delete', 'id' => $quarter->getId())) ?>"
+                            method="post"
+                            onsubmit="formConfirm(event,'Are you sure you want to delete the <?php echo (string)$quarter ?> quarter?');">
+                            <button class="btn btn-sm btn-default btn-row" type="submit" title="Delete Quarter">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

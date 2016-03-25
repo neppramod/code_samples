@@ -1,0 +1,31 @@
+<?php
+use Zend\Form\Element;
+
+$title = 'New Quarter';
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-sm-centered">
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?php echo $this->url('quarter/default', array('controller' => 'quarter', 'action' => 'index')); ?>">
+                    Quarters
+                </a>
+            </li>
+            <li class="active">Quarter Form</li>
+        </ol>
+        <h2><?php echo $this->escapeHtml($title); ?></h2>
+        <?php
+
+        /** @var $form Zend\Form\Form */
+        $form->setAttribute('id', 'quarter-form');
+        $form->setAttribute('action', $this->url('quarter/default', array('controller' => 'quarter', 'action' => 'create')));
+        $form->prepare();
+
+        echo $this->form()->openTag($form);
+        echo $this->formCollection($form);
+        echo $this->form()->closeTag();
+        ?>
+    </div>
+</div>

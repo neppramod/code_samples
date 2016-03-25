@@ -1,0 +1,34 @@
+form#quarter-form div.form-group:nth-child(6) {
+    /*
+        Warning: This rule is a hack.
+
+        In zf2-twb-bundle, attributes can't be added to an input's parent element, so the parent element
+        can't be made hidden by default. This rule hides the availability deadline input's parent element
+        quicker than JavaScript can to avoid confusing users.
+    */
+    display: none;
+}
+
+input#quarter-form-year {
+    width: 65px;
+}
+
+select#quarter-form-session {
+    width: 170px;
+}
+
+input#quarter-form-startdate {
+    width: 110px;
+}
+
+input#quarter-form-enddate {
+    width: 110px;
+}
+
+input#quarter-form-takeavailability {
+    width: 15px;
+}
+
+input#quarter-form-availabilitydeadline {
+    width: 110px;
+}

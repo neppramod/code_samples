@@ -1,0 +1,89 @@
+<script>
+$(function(){
+      $('.datetimepicker').appendDtpicker();
+     $("#participating_people")[0].selectedIndex = 0;
+});
+</script>
+<%= form_for(@event, :html => {class: "form-horizontal", role: "form"} ) do |p| %>
+
+    <% if @event.errors.any? %>
+        <div id="error_explanation">
+
+          <h2><%= pluralize( @event.errors.count, "error") %> prohibited this msg from being saved:</h2>
+
+          <ul>
+            <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :eventName, "Event Name:" %></div>
+      <div class="col-xs-4"><%= p.text_field :eventName, :class => 'form-control'%></div>
+    </div>
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :eventStartDate, "Start Date:"%></div>
+      <div class="col-xs-4"><%= p.text_field :eventStartDate, :class => 'form-control datetimepicker'%></div>
+    </div>
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :eventEndDate, "End Date:"%></div>
+      <div class="col-xs-4"><%= p.text_field :eventEndDate, :class => 'form-control datetimepicker'%></div>
+    </div>
+
+     <h3> Address</h3>
+     <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :street %></div>
+      <div class="col-xs-4"><%= p.text_field :street, :class => 'form-control'%></div>
+    </div>
+
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :city%></div>
+      <div class="col-xs-4"><%= p.text_field :city, :class => "form-control" %></div>
+    </div>
+
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :state%></div>
+      <div class="col-xs-4"><%= p.text_field :state, :class => "form-control" %></div>
+    </div>
+
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :county%></div>
+      <div class="col-xs-4"><%= p.text_field :county, :class => "form-control" %></div>
+    </div>
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :zip %></div>
+      <div class="col-xs-4"><%= p.text_field :zip, :class => "form-control" %></div>
+    </div>
+
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :description, "Description:"%></div>
+      <div class="col-xs-4"><%= p.text_area :description, :class => 'form-control'%></div>
+    </div>
+
+    <div class="row margin-top-15">
+      <div class="col-xs-2"><%= p.label :persons, 'Participating People' %></div>
+      <div class="col-xs-4">
+
+        <%= select_tag "participating_people",
+                       options_from_collection_for_select(Person.all, 'id', 'first_name', @event.persons.map{ |j| j.id }), :multiple => true, :class => "form-control" %>
+      </div>
+    </div>
+  
+    <div class="container margin-top-25">
+
+      <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+          Save <i class="icon-repeat"></i>
+      <% end %>
+      <%= link_to "Cancel", :back, {:class=>"btn btn-danger"} %>
+    </div>
+
+<% end %>
